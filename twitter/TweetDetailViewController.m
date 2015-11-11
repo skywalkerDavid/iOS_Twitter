@@ -125,10 +125,10 @@
     };
     
     if (self.tweet.liked) {
-        newCount++;
+        newCount--;
         [[TwitterClient sharedInstance] unlikeTweet:self.tweet completion:completedRequest];
     } else {
-        newCount--;
+        newCount++;
         [[TwitterClient sharedInstance] likeTweet:self.tweet completion:completedRequest];
     }
     
