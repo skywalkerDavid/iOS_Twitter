@@ -13,7 +13,7 @@
 
 @protocol TweetCellDelegate <NSObject>
 
-- (void) tweetCell:(TweetCell *)cell replyTweet:(Tweet *)tweet;
+- (void)tweetCell:(TweetCell *)cell replyTweet:(Tweet *)tweet;
 
 @end
 

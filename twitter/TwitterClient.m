@@ -49,16 +49,13 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)openURL:(NSURL *)url {
+- (void)processAuthUrl:(NSURL *)url {
     [self fetchAccessTokenWithPath:@"oauth/access_token" method:@"POST" requestToken:[BDBOAuth1Credential credentialWithQueryString:url.query] success:^(BDBOAuth1Credential *accessToken) {
         NSLog(@"Got the access token");
         
         [self.requestSerializer saveAccessToken:accessToken];
         [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            
             User * user = [[User alloc] initWithDictionary:responseObject];
-            [User setCurrentUser:user];
-            NSLog(@"Current user name: %@", user.name);
             self.loginCompletion(user, nil);
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"Failed to get current user");
@@ -69,12 +66,78 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
--(void) homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+-(void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
     [self GET:@"1.1/statuses/home_timeline.json" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSArray *tweetsArray = [Tweet tweetsWithArray:responseObject];
         completion(tweetsArray, nil);
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         completion(nil, error);
+    }];
+}
+
+- (void)likeTweet:(Tweet *)tweet completion:(void (^)(NSDictionary *newTweetInfo, NSError * error))completion {
+    NSDictionary *parameters = @{@"id": tweet.tweetId};
+    
+    [self POST:@"/1.1/favorites/create.json" parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)unlikeTweet:(Tweet *)tweet completion:(void (^)(NSDictionary *newTweetInfo, NSError * error))completion {
+    NSDictionary *parameters = @{@"id": tweet.tweetId};
+    
+    [self POST:@"/1.1/favorites/destroy.json" parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)retweet:(Tweet *)tweet completion:(void (^)(NSDictionary *newTweetInfo, NSError *error))completion {
+    NSDictionary *parameters = @{@"id": tweet.tweetId};
+    
+    NSString *endpoint = [NSString stringWithFormat:@"/1.1/statuses/retweet/%@.json", tweet.tweetId];
+    [self POST:endpoint parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)unRetweet:(Tweet *)tweet completion:(void (^)(NSDictionary *newTweetInfo, NSError * error))completion {
+    NSString *endpoint = [NSString stringWithFormat:@"/1.1/statuses/show/%@.json", [tweet originalTweetId]];
+    NSDictionary *parameters = @{@"include_my_retweet": @(YES)};
+    
+    [self GET:endpoint parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSString *tweetId = responseObject[@"current_user_retweet"][@"id_str"];
+        NSString *endpoint = [NSString stringWithFormat:@"/1.1/statuses/destroy/%@.json", tweetId];
+        [self POST:endpoint parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            completion(nil, nil);
+        } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+            completion(nil, error);
+        }];
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)tweet:(Tweet *)tweet completion:(void (^)(NSDictionary *newTweetInfo, NSError * error))completion {
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"status"] = tweet.text;
+    if (tweet.inReplyTo) {
+        parameters[@"in_reply_to_status_id"] = tweet.inReplyTo.tweetId;
+    };
+    
+    [self POST:@"/1.1/statuses/update.json" parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        if (completion) {
+            completion(responseObject, nil);
+        }
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        if (completion) {
+            completion(nil, error);
+        }
     }];
 }
 @end

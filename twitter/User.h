@@ -24,4 +24,5 @@ extern NSString *const UserDidLogoutNotification;
 + (void)setCurrentUser:(User *)user;
 
 + (void)logout;
++ (void)login:(User *)user;
 @end

@@ -17,15 +17,16 @@
 @property (nonatomic, strong) User *user;
 @property (strong, nonatomic) Tweet *retweetedFrom;
 @property (strong, nonatomic) Tweet *inReplyTo;
-@property (assign, nonatomic) long long retweetCount;
-@property (assign, nonatomic) long long likeCount;
 @property (assign, nonatomic) BOOL retweeted;
 @property (assign, nonatomic) BOOL liked;
-
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+@property (assign, nonatomic) long long retweetCount;
+@property (assign, nonatomic) long long likeCount;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
 
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initFromText:(NSString *)text author:(User *)author inReplyTo:(Tweet *)inReplyTo;
+- (void)updateWithDictionary:(NSDictionary *)dictionary;
 - (NSString *) originalTweetId;
 
 @end

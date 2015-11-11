@@ -11,12 +11,15 @@
 #import "TwitterClient.h"
 #import "Tweet.h"
 #import "TweetCell.h"
+#import "NewTweetViewController.h"
+#import "TweetDetailViewController.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, NewTweetViewControllerDelegate, TweetDetailViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TwitterClient *client;
 @property (strong, nonatomic) NSArray *tweets;
 @property (assign, nonatomic) unsigned long long minTweetId;
+@property (strong, nonatomic) UIRefreshControl *timelineRefreshControl;
 @end
 
 @implementation TweetsViewController
@@ -33,7 +36,7 @@
     UIBarButtonItem *newTweet = [[UIBarButtonItem alloc]initWithImage:newTweetImage
                                                                 style:UIBarButtonItemStylePlain
                                                                target:self
-                                                               action:@selector(composeTweet)];
+                                                               action:@selector(newTweet)];
     self.navigationItem.rightBarButtonItem = newTweet;
     
     UIBarButtonItem *logout = [[UIBarButtonItem alloc]initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
@@ -47,10 +50,27 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"tweetCell"];
 
+    self.timelineRefreshControl = [[UIRefreshControl alloc] init];
+    [self.timelineRefreshControl addTarget:self action:@selector(refreshTimelines) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.timelineRefreshControl atIndex:0];
+    
     [self refreshTimelines];
 }
 
-- (void)composeTweet {
+- (void)newTweet {
+    NewTweetViewController *vc = [[NewTweetViewController alloc] initWithUser:[User currentUser]];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)newTweetViewController:(NewTweetViewController *)viewController newTweet:(Tweet *)tweet {
+    [self.client tweet:tweet completion:nil];
+    
+    NSMutableArray *tweets = [[NSMutableArray alloc] init];
+    [tweets addObject:tweet];
+    [tweets addObjectsFromArray:self.tweets];
+    self.tweets = tweets;
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,18 +87,19 @@
     [self loadTweets];
 }
 
-- (void) loadTweets {
+- (void)loadTweets {
     NSDictionary *parameters = nil;
     
     if (self.minTweetId < ULLONG_MAX) {
         parameters = @{@"max_id": @(self.minTweetId)};
     }
     
-    [self.client homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+    [self.client homeTimelineWithParams:parameters completion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             if (parameters) {
                 self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
             } else {
+                [self.timelineRefreshControl endRefreshing];
                 self.tweets = tweets;
             }
             
@@ -96,6 +117,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView.alpha == 0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            tableView.alpha = 1;
+        }];
+    }
     return self.tweets.count;
 }
 
@@ -118,8 +144,21 @@
     return cell;
 }
 
-- (void) tweetCell:(TweetCell *)cell replyTweet:(Tweet *)tweet {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Tweet *tweet = self.tweets[indexPath.row];
+    TweetDetailViewController *vc = [[TweetDetailViewController alloc] initWithUser:[User currentUser] andTweet:tweet];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
+- (void)tweetCell:(TweetCell *)cell replyTweet:(Tweet *)tweet {
+    NewTweetViewController *vc = [[NewTweetViewController alloc] initWithUser:[User currentUser] andTweet:tweet];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tweetDetail:(TweetDetailViewController *)detail replyTweet:(Tweet *)tweet {
+    [self tweetCell:nil replyTweet:tweet];
 }
 
 @end

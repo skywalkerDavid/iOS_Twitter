@@ -70,4 +70,12 @@ NSString *const kCurrentUserKey = @"CurrentUserKey";
     [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLogoutNotification object:nil];
 }
 
++ (void)login:(User *)user {
+    [User setCurrentUser:user];
+    
+    if (user != nil) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
+    }
+}
+
 @end

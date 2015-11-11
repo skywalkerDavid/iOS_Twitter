@@ -25,17 +25,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogin) name:UserDidLoginNotification object:nil];
     
     User *user = [User currentUser];
     if (user != nil) {
-        NSLog(@"Welcome %@", user.name);
-        
-        TweetsViewController *vc = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-        self.window.rootViewController = nav;
+        [self userDidLogin];
     } else {
-        NSLog(@"Not logged in");
-        self.window.rootViewController = [[LoginViewController alloc] init];
+        [self userDidLogout];
     }
     
     [self.window makeKeyAndVisible];
@@ -46,6 +42,12 @@
 
 - (void)userDidLogout {
     self.window.rootViewController = [[LoginViewController alloc] init];
+}
+
+- (void)userDidLogin {
+    TweetsViewController *vc = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nav;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -71,7 +73,7 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    [[TwitterClient sharedInstance] openURL:url];
+    [[TwitterClient sharedInstance] processAuthUrl:url];
     
     return YES;
 }
