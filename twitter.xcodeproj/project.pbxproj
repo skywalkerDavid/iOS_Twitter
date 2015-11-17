@@ -24,6 +24,14 @@
 		C7909DCF1BF028E400D53671 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C7909DCE1BF028E400D53671 /* AppDelegate.m */; };
 		C7909DD71BF028E400D53671 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7909DD61BF028E400D53671 /* Assets.xcassets */; };
 		C7909DDA1BF028E400D53671 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7909DD81BF028E400D53671 /* LaunchScreen.storyboard */; };
+		C7A218741BFA6C1A0065BD6B /* HamburgerMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A218721BFA6C1A0065BD6B /* HamburgerMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C7A218751BFA6C1A0065BD6B /* HamburgerMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A218731BFA6C1A0065BD6B /* HamburgerMenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C7A218791BFA6C3E0065BD6B /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A218771BFA6C3E0065BD6B /* MenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C7A2187A1BFA6C3E0065BD6B /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A218781BFA6C3E0065BD6B /* MenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C7A2187E1BFA6C4C0065BD6B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A2187C1BFA6C4C0065BD6B /* ProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C7A2187F1BFA6C4C0065BD6B /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A2187D1BFA6C4C0065BD6B /* ProfileViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C7A218821BFA6C730065BD6B /* ViewControllerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A218811BFA6C730065BD6B /* ViewControllerPresenter.m */; settings = {ASSET_TAGS = (); }; };
+		C7A218851BFA882D0065BD6B /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A218841BFA882D0065BD6B /* CustomNavigationController.m */; settings = {ASSET_TAGS = (); }; };
 		FA7EB3A4EDEEB8F5921C9527 /* libPods-twitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5177F0F4644C97A44F76B658 /* libPods-twitter.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +67,19 @@
 		C7909DD61BF028E400D53671 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7909DD91BF028E400D53671 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7909DDB1BF028E400D53671 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7A218711BFA6C1A0065BD6B /* HamburgerMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HamburgerMenuViewController.h; sourceTree = "<group>"; };
+		C7A218721BFA6C1A0065BD6B /* HamburgerMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HamburgerMenuViewController.m; sourceTree = "<group>"; };
+		C7A218731BFA6C1A0065BD6B /* HamburgerMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HamburgerMenuViewController.xib; sourceTree = "<group>"; };
+		C7A218761BFA6C3E0065BD6B /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		C7A218771BFA6C3E0065BD6B /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		C7A218781BFA6C3E0065BD6B /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		C7A2187B1BFA6C4C0065BD6B /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		C7A2187C1BFA6C4C0065BD6B /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		C7A2187D1BFA6C4C0065BD6B /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		C7A218801BFA6C730065BD6B /* ViewControllerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerPresenter.h; sourceTree = "<group>"; };
+		C7A218811BFA6C730065BD6B /* ViewControllerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerPresenter.m; sourceTree = "<group>"; };
+		C7A218831BFA882D0065BD6B /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
+		C7A218841BFA882D0065BD6B /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +126,17 @@
 				C74FF8721BF24E8700DAAF61 /* TweetDetailViewController.h */,
 				C74FF8731BF24E8700DAAF61 /* TweetDetailViewController.m */,
 				C74FF8741BF24E8700DAAF61 /* TweetDetailViewController.xib */,
+				C7A218711BFA6C1A0065BD6B /* HamburgerMenuViewController.h */,
+				C7A218721BFA6C1A0065BD6B /* HamburgerMenuViewController.m */,
+				C7A218731BFA6C1A0065BD6B /* HamburgerMenuViewController.xib */,
+				C7A218761BFA6C3E0065BD6B /* MenuViewController.h */,
+				C7A218771BFA6C3E0065BD6B /* MenuViewController.m */,
+				C7A218781BFA6C3E0065BD6B /* MenuViewController.xib */,
+				C7A2187B1BFA6C4C0065BD6B /* ProfileViewController.h */,
+				C7A2187C1BFA6C4C0065BD6B /* ProfileViewController.m */,
+				C7A2187D1BFA6C4C0065BD6B /* ProfileViewController.xib */,
+				C7A218831BFA882D0065BD6B /* CustomNavigationController.h */,
+				C7A218841BFA882D0065BD6B /* CustomNavigationController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -128,6 +160,8 @@
 				C7909DD61BF028E400D53671 /* Assets.xcassets */,
 				C7909DD81BF028E400D53671 /* LaunchScreen.storyboard */,
 				C7909DDB1BF028E400D53671 /* Info.plist */,
+				C7A218801BFA6C730065BD6B /* ViewControllerPresenter.h */,
+				C7A218811BFA6C730065BD6B /* ViewControllerPresenter.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -252,11 +286,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C74FF8761BF24E8700DAAF61 /* TweetDetailViewController.xib in Resources */,
+				C7A218751BFA6C1A0065BD6B /* HamburgerMenuViewController.xib in Resources */,
 				C74FF8631BF1700100DAAF61 /* TweetsViewController.xib in Resources */,
 				C74FF86C1BF1B64C00DAAF61 /* TweetCell.xib in Resources */,
+				C7A2187A1BFA6C3E0065BD6B /* MenuViewController.xib in Resources */,
 				C7909DDA1BF028E400D53671 /* LaunchScreen.storyboard in Resources */,
 				C74FF8711BF24E7100DAAF61 /* NewTweetViewController.xib in Resources */,
 				C7909DD71BF028E400D53671 /* Assets.xcassets in Resources */,
+				C7A2187F1BFA6C4C0065BD6B /* ProfileViewController.xib in Resources */,
 				C74FF8541BF02E1D00DAAF61 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,12 +354,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C74FF8581BF02F9500DAAF61 /* TwitterClient.m in Sources */,
+				C7A218851BFA882D0065BD6B /* CustomNavigationController.m in Sources */,
+				C7A218821BFA6C730065BD6B /* ViewControllerPresenter.m in Sources */,
 				C74FF8701BF24E7100DAAF61 /* NewTweetViewController.m in Sources */,
 				C7909DCF1BF028E400D53671 /* AppDelegate.m in Sources */,
 				C74FF85E1BF077E100DAAF61 /* User.m in Sources */,
 				C74FF85B1BF077D800DAAF61 /* Tweet.m in Sources */,
 				C7909DCC1BF028E400D53671 /* main.m in Sources */,
+				C7A218741BFA6C1A0065BD6B /* HamburgerMenuViewController.m in Sources */,
+				C7A218791BFA6C3E0065BD6B /* MenuViewController.m in Sources */,
 				C74FF8531BF02E1D00DAAF61 /* LoginViewController.m in Sources */,
+				C7A2187E1BFA6C4C0065BD6B /* ProfileViewController.m in Sources */,
 				C74FF8621BF1700100DAAF61 /* TweetsViewController.m in Sources */,
 				C74FF86B1BF1B64C00DAAF61 /* TweetCell.m in Sources */,
 				C74FF8751BF24E8700DAAF61 /* TweetDetailViewController.m in Sources */,

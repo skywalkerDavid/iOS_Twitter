@@ -30,6 +30,12 @@
 - (void)awakeFromNib {
     self.authorImage.layer.cornerRadius = 3;
     self.authorImage.layer.masksToBounds = YES;
+    
+    UITapGestureRecognizer *tapAuthorImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapAuthorImage)];
+    
+    [self.authorImage setUserInteractionEnabled:YES];
+    
+    [self.authorImage addGestureRecognizer:tapAuthorImage];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -124,6 +130,10 @@
     }
     
     [self updateLikedState:newLiked];
+}
+
+- (void)onTapAuthorImage {
+    [self.delegate tweetCell:self tapUserProfile:self.tweet.user];
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "TweetCell.h"
 #import "NewTweetViewController.h"
 #import "TweetDetailViewController.h"
+#import "ProfileViewController.h"
 
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate, NewTweetViewControllerDelegate, TweetDetailViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,22 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.navigationController.navigationBar.translucent = NO;
-    
-    self.navigationItem.title = @"Home";
-    
-    UIImage *newTweetImage = [UIImage imageNamed:@"new"];
-    newTweetImage = [newTweetImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *newTweet = [[UIBarButtonItem alloc]initWithImage:newTweetImage
-                                                                style:UIBarButtonItemStylePlain
-                                                               target:self
-                                                               action:@selector(newTweet)];
-    self.navigationItem.rightBarButtonItem = newTweet;
-    
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc]initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
-    self.navigationItem.leftBarButtonItem = logout;
-    
 
     self.client = [TwitterClient sharedInstance];
     self.tableView.delegate = self;
@@ -57,10 +42,43 @@
     [self refreshTimelines];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationItem.title = @"Home";
+    
+    UIImage *newTweetImage = [UIImage imageNamed:@"new"];
+    newTweetImage = [newTweetImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *newTweet = [[UIBarButtonItem alloc]initWithImage:newTweetImage
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:self
+                                                               action:@selector(newTweet)];
+    self.navigationItem.rightBarButtonItem = newTweet;
+    
+    UIImage *menuImage = [UIImage imageNamed:@"menu"];
+    menuImage = [menuImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *menu = [[UIBarButtonItem alloc]initWithImage:menuImage
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:self
+                                                           action:@selector(showMenu)];
+    self.navigationItem.leftBarButtonItem = menu;
+
+    self.navigationController.navigationBar.translucent = NO;
+
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self.viewControllerPresenter.currentController setNeedsStatusBarAppearanceUpdate];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleDefault;
+}
+
 - (void)newTweet {
     NewTweetViewController *vc = [[NewTweetViewController alloc] initWithUser:[User currentUser]];
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void) showMenu {
+    [self.viewControllerPresenter showMenu];
 }
 
 - (void)newTweetViewController:(NewTweetViewController *)viewController newTweet:(Tweet *)tweet {
@@ -71,15 +89,6 @@
     [tweets addObjectsFromArray:self.tweets];
     self.tweets = tweets;
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)onLogout {
-    [User logout];
 }
 
 - (void)refreshTimelines {
@@ -117,11 +126,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView.alpha == 0) {
-        [UIView animateWithDuration:0.5 animations:^{
-            tableView.alpha = 1;
-        }];
-    }
     return self.tweets.count;
 }
 
@@ -154,6 +158,13 @@
 - (void)tweetCell:(TweetCell *)cell replyTweet:(Tweet *)tweet {
     NewTweetViewController *vc = [[NewTweetViewController alloc] initWithUser:[User currentUser] andTweet:tweet];
     vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tweetCell:(TweetCell *)cell tapUserProfile:(User *)user {
+    ProfileViewController *vc = [[ProfileViewController alloc] init];
+    vc.user = user;
+    vc.viewControllerPresenter = self.viewControllerPresenter;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

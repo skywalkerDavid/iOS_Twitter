@@ -12,6 +12,9 @@
 #import "User.h"
 #import "Tweet.h"
 #import "TweetsViewController.h"
+#import "HamburgerMenuViewController.h"
+#import "MenuViewController.h"
+#import "ViewControllerPresenter.h"
 
 @interface AppDelegate ()
 
@@ -45,9 +48,18 @@
 }
 
 - (void)userDidLogin {
-    TweetsViewController *vc = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    self.window.rootViewController = nav;
+//    HamburgerMenuViewController *hvc = [[HamburgerMenuViewController alloc] init];
+//    MenuViewController *mvc = [[MenuViewController alloc] init];
+//    TweetsViewController *tvc = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
+//    UINavigationController *tnvc = [[UINavigationController alloc] initWithRootViewController:tvc];
+//    
+//    hvc.menuViewController = mvc;
+//    hvc.contentViewController = tnvc;
+//    
+//    self.window.rootViewController = hvc;
+    
+    ViewControllerPresenter *controllerPresenter = [[ViewControllerPresenter alloc] init];
+    [controllerPresenter presentInWindow:self.window];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

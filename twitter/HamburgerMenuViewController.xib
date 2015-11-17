@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HamburgerMenuViewController">
+            <connections>
+                <outlet property="contentView" destination="iaN-i9-aSs" id="jHQ-V4-cEs"/>
+                <outlet property="contentViewLeadingConstraint" destination="4Fz-GH-4Fg" id="dEn-hb-IhY"/>
+                <outlet property="menuView" destination="eQ3-0O-WK3" id="cCh-nV-15w"/>
+                <outlet property="tapGestureRecognizer" destination="mKR-ZJ-Qhs" id="oqU-LW-TJ6"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ3-0O-WK3">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.17254902420000001" green="0.9450981021" blue="0.94901967050000002" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaN-i9-aSs">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="wII-j8-jxM" appends="YES" id="lFl-bh-WwV"/>
+                        <outletCollection property="gestureRecognizers" destination="mKR-ZJ-Qhs" appends="YES" id="5nX-Ep-4aq"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="iaN-i9-aSs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4Fz-GH-4Fg"/>
+                <constraint firstItem="iaN-i9-aSs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="EoS-bb-3Ag"/>
+                <constraint firstItem="iaN-i9-aSs" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="LLe-ip-mSu"/>
+                <constraint firstAttribute="trailing" secondItem="eQ3-0O-WK3" secondAttribute="trailing" id="SNM-ua-IXa"/>
+                <constraint firstItem="eQ3-0O-WK3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="d2G-dW-t8t"/>
+                <constraint firstAttribute="bottom" secondItem="eQ3-0O-WK3" secondAttribute="bottom" id="guo-pE-UGn"/>
+                <constraint firstAttribute="bottom" secondItem="iaN-i9-aSs" secondAttribute="bottom" id="jbl-lY-PgO"/>
+                <constraint firstItem="eQ3-0O-WK3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rjm-XG-FXL"/>
+            </constraints>
+            <point key="canvasLocation" x="422" y="353"/>
+        </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="wII-j8-jxM">
+            <connections>
+                <action selector="onDragMenuView:" destination="-1" id="Yu4-IW-fcV"/>
+            </connections>
+        </panGestureRecognizer>
+        <tapGestureRecognizer id="mKR-ZJ-Qhs"/>
+    </objects>
+</document>

@@ -72,11 +72,6 @@
     [self updateLikedState:self.tweet.liked withCount:self.tweet.likeCount];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)onReply:(id)sender {
     if (self.delegate) {
         [self.delegate tweetDetail:self replyTweet:self.tweet];
